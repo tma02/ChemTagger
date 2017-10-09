@@ -1,0 +1,96 @@
+[1mdiff --git a/build/classes/test/Test.class b/build/classes/test/Test.class[m
+[1mindex 882e9ac..0bedb85 100644[m
+Binary files a/build/classes/test/Test.class and b/build/classes/test/Test.class differ
+[1mdiff --git a/nbproject/private/private.properties b/nbproject/private/private.properties[m
+[1mindex c88076c..15a3d80 100644[m
+[1m--- a/nbproject/private/private.properties[m
+[1m+++ b/nbproject/private/private.properties[m
+[36m@@ -1,6 +1,9 @@[m
+ compile.on.save=true[m
+ do.depend=false[m
+ do.jar=true[m
+[32m+[m[32mfile.reference.chemicalTagger-1.4.0-jar-with-dependencies.jar=/home/ray/Downloads/chemicalTagger-1.4.0-jar-with-dependencies.jar[m
+[32m+[m[32mfile.reference.slf4j-api-1.7.21.jar=/home/ray/Downloads/slf4j-api-1.7.21.jar[m
+[32m+[m[32mfile.reference.slf4j-nop-1.7.25.jar=/home/ray/Downloads/slf4j-nop-1.7.25.jar[m
+ javac.debug=true[m
+ javadoc.preview=true[m
+[31m-user.properties.file=C:\\Users\\leilu\\AppData\\Roaming\\NetBeans\\8.2\\build.properties[m
+[32m+[m[32muser.properties.file=/home/ray/.netbeans/8.2/build.properties[m
+[1mdiff --git a/nbproject/private/private.xml b/nbproject/private/private.xml[m
+[1mindex ec3cec7..86ab7fd 100644[m
+[1m--- a/nbproject/private/private.xml[m
+[1m+++ b/nbproject/private/private.xml[m
+[36m@@ -3,7 +3,8 @@[m
+     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>[m
+     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">[m
+         <group>[m
+[31m-            <file>file:/F:/LLNL/test/src/test/Test.java</file>[m
+[32m+[m[32m            <file>file:/home/ray/Desktop/chemtagger-Test/src/test/recipe.java</file>[m
+[32m+[m[32m            <file>file:/home/ray/Desktop/chemtagger-Test/src/test/Test.java</file>[m
+         </group>[m
+     </open-files>[m
+ </project-private>[m
+[1mdiff --git a/nbproject/project.properties b/nbproject/project.properties[m
+[1mindex 1fb506d..6554bbe 100644[m
+[1m--- a/nbproject/project.properties[m
+[1m+++ b/nbproject/project.properties[m
+[36m@@ -30,6 +30,7 @@[m [mdist.javadoc.dir=${dist.dir}/javadoc[m
+ endorsed.classpath=[m
+ excludes=[m
+ file.reference.chemicalTagger-1.4.0-jar-with-dependencies.jar=F:\\LLNL\\chemicalTagger-1.4.0-jar-with-dependencies.jar[m
+[32m+[m[32mfile.reference.jdom-2.0.6.zip=/home/ray/Downloads/jdom-2.0.6.zip[m
+ file.reference.slf4j-api-1.7.21.jar=F:\\LLNL\\slf4j-api-1.7.21.jar[m
+ file.reference.slf4j-nop-1.7.25.jar=F:\\LLNL\\slf4j-nop-1.7.25.jar[m
+ includes=**[m
+[36m@@ -37,7 +38,8 @@[m [mjar.compress=false[m
+ javac.classpath=\[m
+     ${file.reference.chemicalTagger-1.4.0-jar-with-dependencies.jar}:\[m
+     ${file.reference.slf4j-api-1.7.21.jar}:\[m
+[31m-    ${file.reference.slf4j-nop-1.7.25.jar}[m
+[32m+[m[32m    ${file.reference.slf4j-nop-1.7.25.jar}:\[m
+[32m+[m[32m    ${file.reference.jdom-2.0.6.zip}[m
+ # Space-separated list of extra javac options[m
+ javac.compilerargs=[m
+ javac.deprecation=false[m
+[1mdiff --git a/src/test/Test.java b/src/test/Test.java[m
+[1mindex 86878e4..ffafe1d 100644[m
+[1m--- a/src/test/Test.java[m
+[1m+++ b/src/test/Test.java[m
+[36m@@ -9,6 +9,15 @@[m [mimport  uk.ac.cam.ch.wwmm.chemicaltagger.ChemistryPOSTagger;[m
+ import  uk.ac.cam.ch.wwmm.chemicaltagger.ChemistrySentenceParser;[m
+ import  uk.ac.cam.ch.wwmm.chemicaltagger.Utils;[m
+ import  nu.xom.Document;[m
+[32m+[m[32mimport java.io.*;[m
+[32m+[m[32mimport java.util.*;[m
+[32m+[m[32mimport java.io.File;[m
+[32m+[m[32mimport javax.xml.parsers.DocumentBuilderFactory;[m
+[32m+[m[32mimport javax.xml.parsers.DocumentBuilder;[m
+[32m+[m
+[32m+[m
+[32m+[m
+[32m+[m
+ [m
+ /**[m
+  *[m
+[36m@@ -22,7 +31,7 @@[m [mpublic class Test {[m
+     public static void main(String[] args) {[m
+         // TODO code application logic here[m
+         [m
+[31m-              String text = "To a stirred solution of 4-hydroxypiperidine (0.97 g, 9.60 mmol) in anhydrous dimethylformamide (20 mL) at 0°C was added 1-(bromomethyl)-4-methoxybenzene (1.93 g, 9.60 mmol) and triethylamine (2.16 g, 21.4 mmol). The reaction mixture was then warmed to room temperature and stirred overnight. After this time the mixture was concentrated under reduced pressure and the resulting residue was dissolved in ethyl acetate (40 mL), washed with water (20 mL) and brine (20 mL) before being dried over sodium sulfate. The drying agent was filtered off and the filtrate concentrated under reduced pressure. The residue obtained was purified by flash chromatography (silica gel, 0-5% methanol/methylene chloride) to afford 1-(4-methoxybenzyl)piperidin-4-ol as a brown oil (1.70 g, 80%).";[m
+[32m+[m[32m       String text = "To a stirred solution of 4-hydroxypiperidine (0.97 g, 9.60 mmol) in anhydrous dimethylformamide (20 mL) at 0°C was added 1-(bromomethyl)-4-methoxybenzene (1.93 g, 9.60 mmol) and triethylamine (2.16 g, 21.4 mmol).";[m
+               [m
+               [m
+                     // Calling ChemistryPOSTagger[m
+[36m@@ -38,7 +47,11 @@[m [mpublic class Test {[m
+       // Return an XMLDoc[m
+       Document doc = chemistrySentenceParser.makeXMLDocument();[m
+ [m
+[31m-      Utils.writeXMLToFile(doc,"F:/LLNL/file1.xml");[m
+[32m+[m[32m      Utils.writeXMLToFile(doc,"./file3.xml");[m
+[32m+[m[41m      [m
+[32m+[m[32m      System.out.println("\nCurrent Element :");[m
+[32m+[m[41m      [m
+[32m+[m[41m      [m
+         [m
+     }[m
+     [m
