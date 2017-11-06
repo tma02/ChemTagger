@@ -23,7 +23,6 @@ public class recipe {
      
 public static void main(String[] args) {
 
-    StringBuilder textContent =  new StringBuilder("");
       try {
           
          File inputFile = new File("./file3.xml");
@@ -33,9 +32,8 @@ public static void main(String[] args) {
          doc.getDocumentElement().normalize();
          NodeList nList = doc.getElementsByTagName("Sentence");
          System.out.println("Recipe Demo");
-         System.out.println("---------------------------------------------------");
          StringBuilder output = new StringBuilder("");
-     //    String output;
+         StringBuilder actionString = new StringBuilder("");
          
          for (int temp = 0; temp < nList.getLength(); temp++) {
             System.out.println("-----------------------Sentence "+temp+"---------------------------");
@@ -48,29 +46,48 @@ public static void main(String[] args) {
               int a = nodes.getLength();
               String non_action="";
               for(int i=0; i<nodes.getLength();i++){
-                //  System.out.println(nodes.item(i).getNodeName());
-                  
-                  // if it is non-action phrase  nodes.item(j).getNodeName().equals("NounPhrase")
+
                   int actionIndex = 0;
                   
                   
                   if(!nodes.item(i).getNodeName().equals("ActionPhrase")){
-                    //  non_action = non_action + getContent(nodes.item(i),output);
-                    getContent(nodes.item(i),output);
-                    
+
+                    getContent(nodes.item(i),output);                   
                   }else{
-                      //TODO: print action phrase
-                      System.out.println(non_action);
-                      non_action = "";
                       System.out.println("ACTION_PHRASE");
+                      NodeList actions = nodes.item(i).getChildNodes();
+                      for(int j = 0; j < actions.getLength(); j++){
+                           Element action_ele = (Element) actions.item(j);
+                           actionString = new StringBuilder().append(temp+1).append(".").append(j+1).append(". ");
+                           
+                           NodeList b = action_ele.getElementsByTagName("*");
+
+                           for(int k = 0; k < b.getLength(); k++){
+                                String id = b.item(k).getNodeName();
+                                if (!(id.equals("PrepPhrase") || id.equals("NounPhrase") || id.equals("ActionPhrase") || id.equals("MOLECULE") || id.equals("OSCAR-CM") || id.equals("QUANTITY") || id.equals("TempPhrase") || id.equals("VOLUME") || id.equals("MASS") || id.equals("AMOUNT") || id.equals("VerbPhrase") || id.equals("TimePhrase") || id.equals("VerbPhrase"))){
+                    
+                                String s = " " + b.item(k).getTextContent();
+                                actionString.append(s);
+                    }
+
+              }
+              
+                            
+              }
+                    System.out.println(actionString.toString());
+                    actionString.delete(0, actionString.length()-1);
+                      
+                      
+                      
                   }
                   if(i==nodes.getLength()-1 && !non_action.equals("")){
                     System.out.println(output.toString());
                   }
-                  
               }
               System.out.println(output.toString());
+              
               output.delete(0, output.length()-1);
+              
               
               
             /*
@@ -108,31 +125,15 @@ public static void main(String[] args) {
 
 public static void getContent(Node node, StringBuilder output){
 
-        //NodeList elements = eElement.getElementsByTagName("*");
         
         if(node.getChildNodes().getLength() != 0){
-       // output = node.getChildNodes().item(0).getTextContent();
-       output.append(" "+node.getChildNodes().item(0).getTextContent());
-       
-     //  System.out.println(output.toString());           
-        for(int i = 1; i < node.getChildNodes().getLength(); i++){
 
-            
-        //output = output + " " +getContent(node.getChildNodes().item(i),output);
-        //    output = node.getChildNodes().item(i).getNodeName();
-            getContent(node.getChildNodes().item(i),output);
-                    
-                        
-        }          
+            output.append(" "+node.getChildNodes().item(0).getTextContent());
+
+            for(int i = 1; i < node.getChildNodes().getLength(); i++){
+                getContent(node.getChildNodes().item(i),output);                       
+            }          
         }
-        
-        
-
-    
-    
-    
-    
-
-}
+    }
     
 }
